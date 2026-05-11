@@ -9,7 +9,6 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 
-        <!-- Подключаем движок для 3D-моделей от Google -->
         <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.3.0/model-viewer.min.js"></script>
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -58,9 +57,56 @@
             #menu h2, #menu a, #menu .close { color: #ffffff !important; border-bottom-color: rgba(255,255,255,0.2) !important; }
             #menu a:hover { color: #2ed573 !important; }
 
+            /* --- ПОИСК --- */
+            .search-wrapper {
+                margin-bottom: 30px;
+                position: relative;
+            }
+            .search-wrapper input#searchInput {
+                width: 100%;
+                padding: 14px 20px 14px 48px;
+                font-family: 'Inter', sans-serif;
+                font-size: 16px;
+                border-radius: 12px;
+                border: 1px solid rgba(255,255,255,0.15);
+                background: rgba(255,255,255,0.07);
+                color: var(--heading-color);
+                outline: none;
+                transition: border-color 0.3s, box-shadow 0.3s, background 0.3s;
+                box-sizing: border-box;
+            }
+            [data-theme="light"] .search-wrapper input#searchInput {
+                background: rgba(0,0,0,0.05);
+                border-color: rgba(0,0,0,0.15);
+            }
+            .search-wrapper input#searchInput::placeholder { color: var(--text-color); opacity: 0.7; }
+            .search-wrapper input#searchInput:focus {
+                border-color: #2ed573;
+                box-shadow: 0 0 0 3px rgba(46, 213, 115, 0.2);
+                background: rgba(255,255,255,0.1);
+            }
+            .search-icon {
+                position: absolute;
+                left: 16px;
+                top: 50%;
+                transform: translateY(-50%);
+                color: var(--text-color);
+                pointer-events: none;
+                opacity: 0.6;
+            }
+            .search-empty-msg {
+                display: none;
+                text-align: center;
+                padding: 40px 0;
+                color: var(--text-color);
+                font-size: 16px;
+                opacity: 0.6;
+            }
+
             /* --- СЕТКА КАРТОЧЕК --- */
+            /* ИСПРАВЛЕНИЕ 1: добавлен position: relative — без него фоновый span перекрывал ссылку */
             .tiles { display: grid !important; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)) !important; gap: 20px !important; }
-            .tiles article { width: 100% !important; margin: 0 !important; border-radius: 8px !important; border: none !important; background-color: var(--card-bg) !important; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05) !important; transition: transform 0.4s ease, box-shadow 0.4s ease !important; overflow: hidden !important; min-height: 250px; }
+            .tiles article { position: relative !important; width: 100% !important; margin: 0 !important; border-radius: 8px !important; border: none !important; background-color: var(--card-bg) !important; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05) !important; transition: transform 0.4s ease, box-shadow 0.4s ease !important; overflow: hidden !important; min-height: 250px; }
             
             .size-wide { grid-column: span 2; }
             .size-large { grid-column: span 2; grid-row: span 2; min-height: 400px; }
@@ -69,7 +115,6 @@
 
             .tiles article:hover, .tiles article:active { transform: translateY(-5px) scale(1.02) !important; box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25) !important; z-index: 10; }
             
-            /* --- ЦВЕТ ТЕКСТА КАРТОЧКИ (РОДНОЕ ВЫРАВНИВАНИЕ ШАБЛОНА СОХРАНЕНО) --- */
             .tiles article h2 { color: #ffffff !important; text-shadow: 0 2px 6px rgba(0,0,0,0.9) !important; font-weight: 600 !important; }
             .tiles article .content p { color: #ffffff !important; text-shadow: 0 1px 4px rgba(0,0,0,0.9) !important; }
             
@@ -77,15 +122,10 @@
 
             /* --- ГАЛЕРЕЯ И 3D --- */
             .fancybox__container { z-index: 99999 !important; }
-            
-            /* Прячем лишние кнопки галереи надежно через CSS */
             .fancybox__nav, .fancybox__counter, .fancybox__toolbar__items--left, .fancybox__toolbar__items--center { display: none !important; }
             .fancybox__toolbar__items--right button:not(.fancybox__button--close) { display: none !important; }
-            
-            /* Оставляем только крестик */
             .fancybox__button--close { background: rgba(0, 0, 0, 0.6) !important; color: white !important; border-radius: 50% !important; margin: 15px !important; padding: 10px !important; display: flex !important; }
             
-            /* Настройки окна 3D */
             .model-container { width: 100%; height: 100%; min-width: 300px; min-height: 300px; max-width: 800px; max-height: 80vh; display: none; background: transparent; }
             model-viewer { width: 100%; height: 100%; outline: none; --poster-color: transparent; }
 
@@ -141,6 +181,16 @@
 								биолабораторию нашей школы.</h1>
 								<p>Здесь мы публикуем результаты наших экспериментов, отчеты о выращивании растений в теплице и исследовательские проекты по биологии. Следите за обновлениями!</p>
 							</header>
+
+                            <!-- ПОИСК -->
+                            <div class="search-wrapper">
+                                <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="11" cy="11" r="8"></circle>
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                </svg>
+                                <input type="text" id="searchInput" placeholder="Поиск по карточкам..." autocomplete="off" />
+                            </div>
+                            <p class="search-empty-msg" id="searchEmptyMsg">Ничего не найдено по вашему запросу.</p>
                             
                             <section class="tiles"></section>
 						</div>
@@ -181,6 +231,7 @@
                 Papa.parse(noCacheUrl, {
                     download: true,
                     header: true,
+                    skipEmptyLines: true, // ИСПРАВЛЕНИЕ 2: пропускаем полностью пустые строки
                     complete: function(results) {
                         const data = results.data;
                         const tilesContainer = document.querySelector('.tiles');
@@ -189,44 +240,48 @@
                         let modelCounter = 0;
 
                         data.forEach(row => {
-                            // Защита от пустых строк
-                            const title = row.Title ? row.Title.trim() : '';
-                            const imgUrl = row.ImageURL ? row.ImageURL.trim() : '';
+                            // ИСПРАВЛЕНИЕ 3: надёжное получение полей — защита от undefined и лишних пробелов
+                            const title = (row['Title'] || '').trim();
+                            const imgUrl = (row['ImageURL'] || '').trim();
                             
-                            // Если нет картинки или названия - пропускаем
-                            if (!title || !imgUrl) return; 
+                            // Если нет картинки или названия — пропускаем
+                            if (!title || !imgUrl) return;
 
                             modelCounter++;
 
                             // Размер карточки
                             let sizeClass = '';
-                            if (row.Size) {
-                                const sizeVal = row.Size.toLowerCase().trim();
-                                if (sizeVal === 'широкая') sizeClass = 'size-wide';
-                                if (sizeVal === 'большая') sizeClass = 'size-large';
-                            }
+                            const sizeVal = (row['Size'] || '').toLowerCase().trim();
+                            if (sizeVal === 'широкая') sizeClass = 'size-wide';
+                            if (sizeVal === 'большая') sizeClass = 'size-large';
 
-                            // Абзацы
-                            let htmlDescription = row.Description ? row.Description.replace(/\r\n|\r|\n/g, '<br>').replace(/\\n/g, '<br>') : '';
-                            
+                            // ИСПРАВЛЕНИЕ 4: описание — безопасное получение, даже если колонки нет совсем
+                            const rawDescription = (row['Description'] || '').trim();
+                            let htmlDescription = rawDescription
+                                .replace(/\r\n|\r|\n/g, '<br>')
+                                .replace(/\\n/g, '<br>');
+
                             // Защита текста для Fancybox (от кавычек)
-                            let captionText = `<b>${title}</b><br><br>${htmlDescription}`;
+                            let captionText = `<b>${title}</b>` + (htmlDescription ? `<br><br>${htmlDescription}` : '');
                             let safeCaptionAttr = captionText.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 
                             // ПРОВЕРКА НА 3D
-                            const hasModel = row.ModelURL !== undefined && row.ModelURL.trim() !== '';
+                            const modelUrl = (row['ModelURL'] || '').trim();
+                            const hasModel = modelUrl !== '';
                             const fancyboxParams = hasModel 
                                 ? `data-src="#model-${modelCounter}" data-type="inline"` 
                                 : `href="${imgUrl}"`;
 
                             const inlineModelHtml = hasModel ? `
                                 <div id="model-${modelCounter}" class="model-container">
-                                    <model-viewer src="${row.ModelURL.trim()}" auto-rotate camera-controls shadow-intensity="1" ar ar-modes="webxr scene-viewer quick-look"></model-viewer>
+                                    <model-viewer src="${modelUrl}" auto-rotate camera-controls shadow-intensity="1" ar ar-modes="webxr scene-viewer quick-look"></model-viewer>
                                 </div>
                             ` : '';
 
                             const article = document.createElement('article');
                             article.className = sizeClass;
+                            // Сохраняем текст для поиска в data-атрибуте
+                            article.setAttribute('data-search', (title + ' ' + rawDescription).toLowerCase());
 
                             article.innerHTML = `
                                 <span class="image" style="display: block; position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; background-image: url('${imgUrl}'); background-size: cover; background-position: center;"></span>
@@ -234,7 +289,7 @@
                                 <a ${fancyboxParams} data-fancybox="gallery" data-caption="${safeCaptionAttr}" style="position: relative; z-index: 1;">
                                     <h2>${title}</h2>
                                     <div class="content">
-                                        <p>${htmlDescription}</p>
+                                        ${htmlDescription ? `<p>${htmlDescription}</p>` : ''}
                                     </div>
                                 </a>
                                 
@@ -244,12 +299,41 @@
                             tilesContainer.appendChild(article);
                         });
 
+                        // ИСПРАВЛЕНИЕ 5: убираем обработчики кликов шаблона Phantom,
+                        // которые перехватывали клики раньше Fancybox
+                        if (typeof jQuery !== 'undefined') {
+                            jQuery('.tiles article').off('click');
+                            jQuery('.tiles article a').off('click');
+                        }
+
                         // ВКЛЮЧАЕМ ГАЛЕРЕЮ
                         Fancybox.bind('[data-fancybox="gallery"]', { 
                             Hash: false, 
                             Image: { fit: "contain", zoom: false } 
                         });
+
+                        // Повторно снимаем обработчики после инициализации Fancybox (на всякий случай)
+                        if (typeof jQuery !== 'undefined') {
+                            jQuery(document).off('click.tiles', '.tiles article');
+                        }
                     }
+                });
+
+                // --- ПОИСК ---
+                document.getElementById('searchInput').addEventListener('input', function() {
+                    const query = this.value.toLowerCase().trim();
+                    const articles = document.querySelectorAll('.tiles article');
+                    let visibleCount = 0;
+
+                    articles.forEach(function(article) {
+                        const text = article.getAttribute('data-search') || '';
+                        const match = !query || text.includes(query);
+                        article.style.display = match ? '' : 'none';
+                        if (match) visibleCount++;
+                    });
+
+                    const emptyMsg = document.getElementById('searchEmptyMsg');
+                    emptyMsg.style.display = (visibleCount === 0 && query !== '') ? 'block' : 'none';
                 });
             </script>
 	</body>

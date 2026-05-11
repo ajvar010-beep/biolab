@@ -59,42 +59,47 @@
 
             /* --- ПОИСК --- */
             .search-wrapper {
-                margin-bottom: 30px;
-                position: relative;
+                display: block !important;
+                visibility: visible !important;
+                margin-bottom: 30px !important;
+                position: relative !important;
+                width: 100% !important;
             }
-            .search-wrapper input#searchInput {
-                width: 100%;
-                padding: 14px 20px 14px 48px;
-                font-family: 'Inter', sans-serif;
-                font-size: 16px;
-                border-radius: 12px;
-                border: 1px solid rgba(255,255,255,0.15);
-                background: rgba(255,255,255,0.07);
-                color: var(--heading-color);
-                outline: none;
-                transition: border-color 0.3s, box-shadow 0.3s, background 0.3s;
-                box-sizing: border-box;
+            #searchInput {
+                display: block !important;
+                visibility: visible !important;
+                width: 100% !important;
+                padding: 14px 20px 14px 48px !important;
+                font-family: 'Inter', sans-serif !important;
+                font-size: 16px !important;
+                border-radius: 12px !important;
+                border: 1px solid rgba(255,255,255,0.15) !important;
+                background: rgba(255,255,255,0.07) !important;
+                color: #ffffff !important;
+                outline: none !important;
+                box-sizing: border-box !important;
+                -webkit-appearance: none !important;
+                appearance: none !important;
             }
-            [data-theme="light"] .search-wrapper input#searchInput {
-                background: rgba(0,0,0,0.05);
-                border-color: rgba(0,0,0,0.15);
+            [data-theme="light"] #searchInput {
+                background: rgba(0,0,0,0.06) !important;
+                border-color: rgba(0,0,0,0.15) !important;
+                color: #2c3e50 !important;
             }
-            .search-wrapper input#searchInput::placeholder { color: var(--text-color); opacity: 0.7; }
-            .search-wrapper input#searchInput:focus {
-                border-color: #2ed573;
-                box-shadow: 0 0 0 3px rgba(46, 213, 115, 0.2);
-                background: rgba(255,255,255,0.1);
+            #searchInput::placeholder { color: #888 !important; }
+            #searchInput:focus {
+                border-color: #2ed573 !important;
+                box-shadow: 0 0 0 3px rgba(46, 213, 115, 0.2) !important;
             }
             .search-icon {
-                position: absolute;
-                left: 16px;
-                top: 50%;
-                transform: translateY(-50%);
-                color: var(--text-color);
-                pointer-events: none;
-                opacity: 0.6;
+                position: absolute !important;
+                left: 16px !important;
+                top: 50% !important;
+                transform: translateY(-50%) !important;
+                color: #888 !important;
+                pointer-events: none !important;
             }
-            .search-empty-msg {
+            #searchEmptyMsg {
                 display: none;
                 text-align: center;
                 padding: 40px 0;
